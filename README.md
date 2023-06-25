@@ -63,6 +63,6 @@ class ExampleClass {
 
 4. To preview your UML diagram, use the Command Palette (`Cmd` + `Shift` + `P`), type "PlantUML: Preview Current Diagram" and press `Enter`.
 
-Remember, you might need to increase the default timeout in the extension settings if you are working with larger class diagrams. You can do this by opening the Command Palette (`Cmd` + `Shift` + `P`), type "Preferences: Open User Settings", press `Enter` and search for "PlantUML server timeout". The default is 3 seconds, but you may want to increase it based on your needs.
+Remember, you might need to increase the default timeout in the extension settings if you are working with larger class diagrams. You can do this by opening the Command Palette (`Cmd` + `Shift` + `D`), type "Preferences: Open User Settings", press `Enter` and search for "PlantUML server timeout". The default is 3 seconds, but you may want to increase it based on your needs.
 
 We hope this guide helps you get started with PlantUML in VSCode. Happy diagramming!
