@@ -53,16 +53,46 @@ Once the extension is installed, you can start creating your UML diagrams.
 ```plantuml
 @startuml
 
-class ExampleClass {
-  +publicMethod1()
-  -privateMethod1()
+class Animal {
+  +void eat()
+  +void sleep()
 }
+
+class Cat {
+  +void purr()
+}
+
+class Dog {
+  +void bark()
+}
+
+class Owner {
+  +void feed(Animal a)
+}
+
+Animal <|-- Cat
+Animal <|-- Dog
+
+Owner "1" -- "0..*" Animal : has >
 
 @enduml
 ```
 
-4. To preview your UML diagram, use the Command Palette (`Cmd` + `Shift` + `P`), type "PlantUML: Preview Current Diagram" and press `Enter`.
+In this diagram:
 
-Remember, you might need to increase the default timeout in the extension settings if you are working with larger class diagrams. You can do this by opening the Command Palette (`Cmd` + `Shift` + `D`), type "Preferences: Open User Settings", press `Enter` and search for "PlantUML server timeout". The default is 3 seconds, but you may want to increase it based on your needs.
+- `Animal` is a superclass that has two methods `eat()` and `sleep()`.
+- `Cat` and `Dog` are subclasses of `Animal`. They inherit the methods from `Animal` and also have their own methods (`purr()` for `Cat` and `bark()` for `Dog`).
+- `Owner` is a separate class that has a method `feed(Animal a)` which can feed any Animal.
+- `Owner` and `Animal` have an association relationship which is represented by a line connecting them. The `"1"` on the Owner side and `"0..*"` on the Animal side represent multiplicity (an Owner can have zero to many Animals).
+
+4. To preview your UML diagram, you can either:
+
+   - Use the Command Palette (`Cmd` + `Shift` + `P`), type "PlantUML: Preview Current Diagram" and press `Enter`.
+   
+   - Or, use the shortcut `Ctrl`/`Cmd` + `D` to display the diagram directly.
+
+Remember, you might need to increase the default timeout in the extension settings if you are working with larger class diagrams. You can do this by opening the Command Palette (`Cmd` + `Shift` + `P`), type "Preferences: Open User Settings", press `Enter
+
+` and search for "PlantUML server timeout". The default is 3 seconds, but you may want to increase it based on your needs.
 
 We hope this guide helps you get started with PlantUML in VSCode. Happy diagramming!
