@@ -78,7 +78,7 @@ Owner "1" -- "0..*" Animal : has >
 @enduml
 ```
 
-In this diagram:
+In this diagram (plantUML): 
 
 - `Animal` is a superclass that has two methods `eat()` and `sleep()`.
 - `Cat` and `Dog` are subclasses of `Animal`. They inherit the methods from `Animal` and also have their own methods (`purr()` for `Cat` and `bark()` for `Dog`).
@@ -90,6 +90,10 @@ In this diagram:
    - Use the Command Palette (`Cmd` + `Shift` + `P`), type "PlantUML: Preview Current Diagram" and press `Enter`.
    
    - Or, use the shortcut `Ctrl`/`Cmd` + `D` to display the diagram directly.
+  
+<p align="center">
+<img width="350" alt="classes" src="https://github.com/HussainHaris/Guidelines/assets/12214582/253e8fa5-6e41-41ed-9feb-34168dab1337">
+</p>
 
 Remember, you might need to increase the default timeout in the extension settings if you are working with larger class diagrams. You can do this by opening the Command Palette (`Cmd` + `Shift` + `P`), type "Preferences: Open User Settings", press `Enter
 
