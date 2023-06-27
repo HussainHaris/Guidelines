@@ -1,0 +1,25 @@
+@startuml
+
+class Animal {
+  +void eat()
+  +void sleep()
+}
+
+class Cat {
+  +void purr()
+}
+
+class Dog {
+  +void bark()
+}
+
+class Owner {
+  +void feed(Animal a)
+}
+
+Animal <|-- Cat
+Animal <|-- Dog
+
+Owner "1" -- "0..*" Animal : has >
+
+@enduml
