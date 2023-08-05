@@ -1,3 +1,8 @@
+https://operationsq-my.sharepoint.com/:v:/p/moussa/EVGuIye44n9JunTWXIRK0csBVxp3dCIUKkxVjuks7E6OZw?e=UQOkYn&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19
+
+
+
+
 Let's say we are adding a time series demand forecaster component to the code 
 
 Step 1: Architecture & Design
