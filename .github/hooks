@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# This script will be run before every push to the repo
+
+# Navigate to your project directory
+cd $(git rev-parse --show-toplevel)
+
+# Use python3 by default, but fall back to python if python3 is not available
+PYTHON=$(command -v python3 || command -v python)
+
+if [ -z "$PYTHON" ]; then
+    echo "Python not found. Please install Python and try again."
+    exit 1
+fi
+
+echo "Installing dependencies..."
+$PYTHON -m pip install --upgrade pip
+$PYTHON -m pip install ruff pytest
+if [ -f requirements.txt ]; then 
+    $PYTHON -m pip install -r requirements.txt 
+fi
+
+if ! command -v ruff &> /dev/null; then
+    echo "Ruff not found. Please install ruff and try again."
+    exit 1
+fi
+
+echo "Linting code..."
+ruff --format=github --select=E9,F63,F7,F82 --target-version=py37 .
+ruff --format=github --target-version=py37 .
+
+echo "Running tests..."
+$PYTHON -m pytest
+
+# If pytest exited with a non-zero code (i.e., some tests failed), then prevent the push.
+if [ $? -ne 0 ]; then
+    echo "Tests must pass before push!"
+    exit 1
+fi
+
+# Otherwise, all is well
+echo "All checks passed!"
+

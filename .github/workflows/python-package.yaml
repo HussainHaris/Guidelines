@@ -31,6 +31,17 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest
+      - name: Setup C++ build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ 
+      - name: Build with Cmake
+        run: |
+          cmake -S . -B build
+          cmake --build build
+      - name: Run Google Test suite
+        run: |
+          cd build && ctest
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
