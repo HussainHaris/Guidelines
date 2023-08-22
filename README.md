@@ -1,3 +1,93 @@
+# Continuous Integration with GitHub Actions
+
+Continuous Integration (CI) and Continuous Deployment (CD) have transformed modern software development practices. CI/CD pipelines ensure the code delivery process is automated, consistent, and reliable. A fundamental aspect of CI is automatically checking every code submission using tools like linters, formatters, and unit tests. Let's delve deeper into these tools' roles in a GitHub Actions setup for a multi-language project, involving Python and C++.
+
+## The Role of Linters, Formatters, and Unit Tests
+
+- **Linters**: Linters inspect your source code for potential programming errors, bugs, stylistic mistakes, and dubious constructs. They ensure the code aligns with coding standards, thus improving readability and maintainability.
+- **Formatters**: Formatters automatically refactor your code's style to meet a specified standard or configuration. This ensures the codebase remains consistent in style, making it easier to read and maintain.
+- **Unit Tests**: Automated tests focusing on a small "unit" of functionality, often a function or method. They ensure that the code behaves as intended, vital for guaranteeing the reliability and correctness of software.
+
+## GitHub Actions Workflow
+
+On every pull request, GitHub Actions triggers a defined workflow, ensuring code quality:
+
+- For **C++**:
+  - **clang-format** modifies the style of your C++ code.
+  - **clang-tidy** checks your code against a set of rules and suggests changes for any found issues.
+  - The CMake build process confirms your code compiles correctly.
+  - **Google Tests** runs a suite of unit tests to ensure the code's functional correctness.
+  
+- For **Python**:
+  - **pylint** checks the code for potential errors and enforces a coding standard.
+  - **ruff** provides linting and formatting capabilities.
+  - **pytest** runs unit tests, ensuring functional correctness.
+
+## Setting up Locally
+
+### C++ Tools on MacOS
+
+#### clang-format
+```bash
+brew install clang-format
+```
+
+#### clang-tidy
+```bash
+brew install llvm
+# Add the LLVM binaries to your path:
+echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> ~/.zshrc
+# Create an alias for clang-tidy:
+echo 'alias clang-tidy=/opt/homebrew/opt/llvm/bin/clang-tidy' >> ~/.zshrc
+```
+
+#### CMake
+```bash
+brew install cmake
+```
+
+### Python Tools on MacOS
+
+```bash
+# Install Python if not yet installed
+brew install python
+
+# Install the necessary Python packages
+pip install pylint ruff pytest
+```
+
+## Testing Your Code
+
+### C++
+
+To build your C++ code:
+
+```bash
+cmake -S . -B build -DENABLE_CLANG_TIDY=ON
+cmake --build build
+```
+
+To run the Google Test suite:
+
+```bash
+cd build && ctest
+```
+
+### Python
+
+For Python, you can run each tool individually:
+
+```bash
+pylint your_python_file.py
+ruff your_python_file.py
+pytest your_test_file.py
+```
+
+---
+
+By following this documentation, users can set up a local environment for development and understand the CI process in place for the project.
+
+
 # PlantUML Installation and Usage Guide
 
 ## Introduction
