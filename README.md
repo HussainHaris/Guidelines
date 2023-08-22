@@ -23,6 +23,62 @@ On every pull request, GitHub Actions triggers a defined workflow, ensuring code
   - **ruff** provides linting and formatting capabilities.
   - **pytest** runs unit tests, ensuring functional correctness.
 
+## Setting up Github Actions
+All you need to enable Github actions on your repository is to create a `[your_workflow_name].yaml` file in your `.github/workflows` directory. Github Actions will automatically run the commands and build the code (including dependencies, linter, formatter, and unit tests) all on a mini-OS/container as specified. 
+
+Here is an example of how we setup our workflow for CI with Python and C++ code
+```yaml
+name: Python package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint with ruff
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          ruff --format=github --select=E9,F63,F7,F82 --target-version=py37 .
+          # default set of ruff rules with GitHub Annotations
+          ruff --format=github --target-version=py37 .
+      - name: Test with pytest
+        run: |
+          python -m pytest
+      - name: Setup C++ build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ clang-tidy clang-format
+      - name: Build with Cmake and enable clang-tidy + clang-format
+        run: |
+          cmake -S . -B build -DENABLE_CLANG_TIDY=ON
+          cmake --build build
+      - name: Run Google Test suite
+        run: |
+          cd build && ctest
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+```
+
 ## Setting up Locally
 
 ### C++ Tools on MacOS
