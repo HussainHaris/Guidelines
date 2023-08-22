@@ -14,6 +14,34 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+option(ENABLE_CLANG_TIDY "Enable clang-tidy during compilation" OFF)
+set(CLANG_TIDY_EXE "/opt/homebrew/opt/llvm/bin/clang-tidy")
+if(NOT EXISTS ${CLANG_TIDY_EXE})
+    message(WARNING "clang-tidy not found at ${CLANG_TIDY_EXE}!")
+else()
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+endif()
+
+# Find clang-format
+find_program(CLANG_FORMAT_EXE NAMES "clang-format" PATHS "/opt/homebrew/opt/llvm/bin")
+
+# Add clang-format target (if clang-format is found)
+if(CLANG_FORMAT_EXE)
+    message(STATUS "clang-format found at: ${CLANG_FORMAT_EXE}")
+    # Gather all your source files into variable SOURCE_FILES
+    file(GLOB_RECURSE SOURCE_FILES 
+         ${CMAKE_SOURCE_DIR}/src/*.cpp 
+         ${CMAKE_SOURCE_DIR}/src/*.h)
+
+    add_custom_target(
+        clang-format
+        COMMAND ${CLANG_FORMAT_EXE} -i -style=file ${SOURCE_FILES}
+        COMMENT "Running clang-format"
+    )
+endif()
+
+
 enable_testing()
 
 add_executable(

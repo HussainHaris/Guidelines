@@ -34,10 +34,13 @@ jobs:
       - name: Setup C++ build environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ 
-      - name: Build with Cmake
+          sudo apt-get install -y cmake g++ clang-tidy clang-format
+      - name: Format code with clang-format
         run: |
-          cmake -S . -B build
+          make clang-format
+      - name: Build with Cmake and enable clang-tidy
+        run: |
+          cmake -S . -B build -DENABLE_CLANG_TIDY=ON
           cmake --build build
       - name: Run Google Test suite
         run: |
