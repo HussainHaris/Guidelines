@@ -131,7 +131,11 @@ cd build && ctest
 
 ### Python
 
-For Python, you can run each tool individually:
+For Python, you can run all of your unit tests in `tests` with: 
+```bash
+python -m pytest
+```
+or each tool individually as follows:
 
 ```bash
 pylint your_python_file.py
